@@ -1,6 +1,7 @@
 import { Header } from './Header';
 import { Footer } from './Footer';
-import { Button } from './ui/button';
+import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
 import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -131,21 +132,24 @@ export function Home({ onNavigate, onSelectPost, onSelectCategory }: HomeProps) 
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                size="lg"
-                className="bg-primary hover:bg-primary-dark transition-colors duration-300 rounded-lg px-8 py-3"
-                onClick={() => onNavigate('blog')}
-              >
-                ✨ Start Glowing Today
-              </Button>
-              <Button 
-                size="lg"
-                variant="outline"
-                className="border-primary text-primary hover:bg-primary-light transition-colors rounded-lg px-8 py-3"
-                onClick={() => onNavigate('about')}
-              >
-                Our Story
-              </Button>
+             <Link to="/blogs">
+  <Button 
+    size="lg"
+    className="bg-primary hover:bg-primary-dark transition-colors duration-300 rounded-lg px-8 py-3"
+  >
+    ✨ Start Glowing Today
+  </Button>
+</Link>
+
+<Link to="/about">
+  <Button 
+    size="lg"
+    variant="outline"
+    className="border-primary text-primary hover:bg-primary-light transition-colors rounded-lg px-8 py-3"
+  >
+    Our Story
+  </Button>
+</Link>
             </div>
             
             {/* Stats */}
@@ -182,7 +186,9 @@ export function Home({ onNavigate, onSelectPost, onSelectCategory }: HomeProps) 
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Article</h2>
               <p className="text-xl text-foreground/70">Our most popular beauty secret this week</p>
             </div>
-            
+            <Link 
+  to={`/blog/${featuredPosts[0].title.toLowerCase().replace(/\s+/g, "-")}`}
+>
             <Card 
               className="overflow-hidden hover:shadow-xl transition-all duration-500 cursor-pointer transform hover:scale-[1.02] border-gray-100"
               onClick={() => handlePostClick(featuredPosts[0])}
@@ -232,6 +238,7 @@ export function Home({ onNavigate, onSelectPost, onSelectCategory }: HomeProps) 
                 </div>
               </div>
             </Card>
+            </Link>
           </div>
         </div>
       </section>
@@ -247,10 +254,13 @@ export function Home({ onNavigate, onSelectPost, onSelectCategory }: HomeProps) 
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {categories.map((category, index) => (
+                 <Link 
+  to={`/category/${category.slug}`}
+>
                 <Card 
                   key={category.slug}
                   className={`group p-8 text-center hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105 border-gray-100 bg-white hover:bg-primary-light/20 ${index === 0 ? 'lg:col-span-2' : ''}`}
-                  onClick={() => handleCategoryClick(category.slug)}
+                  
                 >
                   <div className="relative mb-6">
                     <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto group-hover:bg-primary/20 transition-colors duration-300">
@@ -279,6 +289,7 @@ export function Home({ onNavigate, onSelectPost, onSelectCategory }: HomeProps) 
                     </span>
                   </div>
                 </Card>
+                </Link>
               ))}
             </div>
           </div>
@@ -294,6 +305,7 @@ export function Home({ onNavigate, onSelectPost, onSelectCategory }: HomeProps) 
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">Latest Glow Secrets</h2>
                 <p className="text-xl text-foreground/70">Fresh beauty insights just for you</p>
               </div>
+              <Link to="/blogs">
               <Button 
                 variant="outline"
                 onClick={() => onNavigate('blog')}
@@ -301,10 +313,14 @@ export function Home({ onNavigate, onSelectPost, onSelectCategory }: HomeProps) 
               >
                 View All Posts →
               </Button>
+              </Link>
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredPosts.slice(1).map((post, index) => (
+                <Link 
+  to={`/blog/${post.title.toLowerCase().replace(/\s+/g, "-")}`}
+>
                 <Card 
                   key={post.id}
                   className="group overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:scale-105 border-gray-100 bg-white"
@@ -349,6 +365,7 @@ export function Home({ onNavigate, onSelectPost, onSelectCategory }: HomeProps) 
                     </div>
                   </CardContent>
                 </Card>
+                </Link>
               ))}
             </div>
             

@@ -10,19 +10,14 @@ export default function App() {
   return (
     <div>
       {/* Example Header Navigation */}
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/blogs">Blogs</Link>
-        <Link to="/about">About</Link>
-        <Link to="/contact">Contact</Link>
-      </nav>
+     
 
       {/* Routes */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blogs" element={<BlogListing />} />
-        <Route path="/blog/:id" element={<BlogPost />} />
-        <Route path="/category/:name" element={<CategoryPage />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+        <Route path="/category/:category" element={<CategoryPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>

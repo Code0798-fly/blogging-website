@@ -1,15 +1,12 @@
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { Link, useNavigate } from "react-router-dom";
 
-interface HeaderProps {
-  onNavigate: (page: string) => void;
-  onSelectCategory: (category: string) => void;
-}
+export function Header() {
+  const navigate = useNavigate();
 
-export function Header({ onNavigate, onSelectCategory }: HeaderProps) {
   const handleCategoryClick = (category: string) => {
-    onSelectCategory(category);
-    onNavigate('category');
+    navigate(`/category/${category}`);
   };
 
   return (
@@ -19,7 +16,7 @@ export function Header({ onNavigate, onSelectCategory }: HeaderProps) {
           {/* Logo */}
           <div 
             className="flex items-center space-x-3 cursor-pointer group"
-            onClick={() => onNavigate('home')}
+            onClick={() => navigate('/')}
           >
             <div className="relative">
               <div className="w-12 h-12 gradient-rainbow rounded-2xl flex items-center justify-center transform group-hover:scale-105 transition-transform duration-200">
@@ -37,18 +34,20 @@ export function Header({ onNavigate, onSelectCategory }: HeaderProps) {
 
           {/* Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <button 
-              onClick={() => onNavigate('home')}
+            <Link 
+              to="/"
               className="text-foreground/80 hover:text-primary transition-colors duration-200 font-medium"
             >
               Home
-            </button>
-            <button 
-              onClick={() => onNavigate('blog')}
+            </Link>
+            <Link 
+              to="/blogs"
               className="text-foreground/80 hover:text-primary transition-colors duration-200 font-medium"
             >
               All Posts
-            </button>
+            </Link>
+
+            {/* Categories Dropdown */}
             <div className="relative group">
               <button className="text-foreground/80 hover:text-primary transition-colors duration-200 font-medium flex items-center space-x-1">
                 <span>Categories</span>
@@ -66,6 +65,7 @@ export function Header({ onNavigate, onSelectCategory }: HeaderProps) {
                       <div className="text-xs text-muted-foreground">Glow from within</div>
                     </div>
                   </button>
+
                   <button 
                     onClick={() => handleCategoryClick('wellness')}
                     className="flex items-center space-x-3 w-full text-left px-4 py-3 text-foreground/80 hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 hover:text-secondary transition-all duration-200 rounded-xl"
@@ -76,6 +76,7 @@ export function Header({ onNavigate, onSelectCategory }: HeaderProps) {
                       <div className="text-xs text-muted-foreground">Mind & body balance</div>
                     </div>
                   </button>
+
                   <button 
                     onClick={() => handleCategoryClick('lifestyle')}
                     className="flex items-center space-x-3 w-full text-left px-4 py-3 text-foreground/80 hover:bg-gradient-to-r hover:from-orange-50 hover:to-yellow-50 hover:text-accent transition-all duration-200 rounded-xl"
@@ -86,6 +87,7 @@ export function Header({ onNavigate, onSelectCategory }: HeaderProps) {
                       <div className="text-xs text-muted-foreground">Style inspiration</div>
                     </div>
                   </button>
+
                   <button 
                     onClick={() => handleCategoryClick('nutrition')}
                     className="flex items-center space-x-3 w-full text-left px-4 py-3 text-foreground/80 hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 hover:text-tertiary transition-all duration-200 rounded-xl"
@@ -96,6 +98,7 @@ export function Header({ onNavigate, onSelectCategory }: HeaderProps) {
                       <div className="text-xs text-muted-foreground">Fuel your glow</div>
                     </div>
                   </button>
+
                   <button 
                     onClick={() => handleCategoryClick('selfcare')}
                     className="flex items-center space-x-3 w-full text-left px-4 py-3 text-foreground/80 hover:bg-gradient-to-r hover:from-pink-50 hover:to-rose-50 hover:text-primary transition-all duration-200 rounded-xl"
@@ -109,18 +112,19 @@ export function Header({ onNavigate, onSelectCategory }: HeaderProps) {
                 </div>
               </div>
             </div>
-            <button 
-              onClick={() => onNavigate('about')}
+
+            <Link 
+              to="/about"
               className="text-foreground/80 hover:text-primary transition-colors duration-200 font-medium"
             >
               About
-            </button>
-            <button 
-              onClick={() => onNavigate('contact')}
+            </Link>
+            <Link 
+              to="/contact"
               className="text-foreground/80 hover:text-primary transition-colors duration-200 font-medium"
             >
               Contact
-            </button>
+            </Link>
           </nav>
 
           {/* CTA Button */}

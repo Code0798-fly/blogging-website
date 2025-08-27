@@ -1,33 +1,78 @@
-import { Header } from './Header';
-import { Footer } from './Footer';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Card, CardContent } from './ui/card';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
+import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+import { Card, CardContent } from "./ui/card";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
 
-interface BlogPostProps {
-  post: any;
-  onNavigate: (page: string) => void;
-}
-
-const relatedPosts = [
-  {
-    id: 4,
-    title: "The Science Behind Anti-Aging Serums",
-    category: "skincare",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=300&h=200&fit=crop"
+// ✅ all categories ka dummy data (expand kar sakte ho)
+const categoryData = {
+  skincare: {
+    posts: [
+      {
+        id: 1,
+        slug: "skincare-basics",
+        title: "The Ultimate Skincare Routine for Beginners",
+        category: "skincare",
+        readTime: "7 min read",
+        excerpt: "Learn the step by step skincare routine to achieve glowing skin...",
+        content: "Full skincare routine content with detailed steps, products, and expert advice...",
+        image:
+          "https://images.unsplash.com/photo-1583241801167-f7e4173b9c3b?w=800&h=500&fit=crop",
+      },
+      {
+        id: 4,
+        slug: "anti-aging-serums",
+        title: "The Science Behind Anti-Aging Serums",
+        category: "skincare",
+        readTime: "8 min read",
+        excerpt: "Discover how anti-aging serums actually work on skin...",
+        content: "Deep dive into anti-aging products, ingredients, and dermatologist reviews...",
+        image:
+          "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&h=500&fit=crop",
+      },
+    ],
   },
-  {
-    id: 5,
-    title: "Natural Hair Masks for Every Hair Type",
-    category: "haircare",
-    readTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=300&h=200&fit=crop"
-  }
-];
+  haircare: {
+    posts: [
+      {
+        id: 2,
+        slug: "haircare-tips",
+        title: "5 Proven Haircare Tips for Healthy Hair",
+        category: "haircare",
+        readTime: "5 min read",
+        excerpt: "Simple habits that can transform your hair health naturally...",
+        content: "Here are 5 detailed habits, remedies, and expert-backed tips for strong hair...",
+        image:
+          "https://images.unsplash.com/photo-1600185365926-3a2b1e7b0f5d?w=800&h=500&fit=crop",
+      },
+      {
+        id: 5,
+        slug: "natural-hair-masks",
+        title: "Natural Hair Masks for Every Hair Type",
+        category: "haircare",
+        readTime: "6 min read",
+        excerpt: "DIY masks you can make from ingredients at home...",
+        content: "Step by step guide for natural masks suitable for dry, oily, curly, and straight hair...",
+        image:
+          "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&h=500&fit=crop",
+      },
+    ],
+  },
+};
 
-export function BlogPost({ post, onNavigate }: BlogPostProps) {
+export function BlogPost() {
+  const { slug } = useParams();
+  const navigate = useNavigate();
+
+  // ✅ saari categories ke andar se post find karna
+  let post: any = null;
+  Object.values(categoryData).forEach((cat: any) => {
+    const found = cat.posts.find((p: any) => p.slug === slug);
+    if (found) post = found;
+  });
+
   if (!post) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -36,19 +81,16 @@ export function BlogPost({ post, onNavigate }: BlogPostProps) {
     );
   }
 
-  const handleCategorySelect = (category: string) => {
-    onNavigate('category');
-  };
-
-  const handleRelatedPostClick = (relatedPost: any) => {
-    // This would typically update the current post and stay on the same page
-    onNavigate('post');
-  };
+  // ✅ related posts (same category ke andar se)
+  const relatedPosts =
+    categoryData[post.category as keyof typeof categoryData]?.posts.filter(
+      (p) => p.slug !== slug
+    ) || [];
 
   return (
     <div className="min-h-screen">
-      <Header onNavigate={onNavigate} onSelectCategory={handleCategorySelect} />
-      
+      <Header />
+
       {/* Article Header */}
       <article className="py-8">
         <div className="container mx-auto px-4">
@@ -56,19 +98,13 @@ export function BlogPost({ post, onNavigate }: BlogPostProps) {
             {/* Breadcrumb */}
             <nav className="mb-8">
               <div className="flex items-center space-x-2 text-sm text-gray-500">
-                <button 
-                  onClick={() => onNavigate('home')}
-                  className="hover:text-green-600"
-                >
+                <Link to="/" className="hover:text-green-600">
                   Home
-                </button>
+                </Link>
                 <span>/</span>
-                <button 
-                  onClick={() => onNavigate('blog')}
-                  className="hover:text-green-600"
-                >
+                <Link to="/blog" className="hover:text-green-600">
                   Blog
-                </button>
+                </Link>
                 <span>/</span>
                 <span className="text-gray-700">{post.title}</span>
               </div>
@@ -105,33 +141,12 @@ export function BlogPost({ post, onNavigate }: BlogPostProps) {
               <p className="text-lg text-gray-600 mb-6 leading-relaxed">
                 {post.excerpt}
               </p>
-              
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 mt-8">Understanding the Basics</h2>
+
+              <h2 className="text-2xl font-bold text-gray-800 mb-4 mt-8">
+                Full Article
+              </h2>
               <p className="text-gray-700 mb-6 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              </p>
-              
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Key Steps to Follow</h3>
-              <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
-                <li>Start with clean hands and a clean face</li>
-                <li>Apply products in the correct order</li>
-                <li>Be gentle with your skin</li>
-                <li>Be consistent with your routine</li>
-                <li>Listen to your skin's needs</li>
-              </ul>
-              
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 mt-8">Expert Tips</h2>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              
-              <blockquote className="border-l-4 border-green-500 pl-6 my-8 italic text-gray-600">
-                "Remember, consistency is key when it comes to any beauty routine. Results take time, so be patient with yourself and your skin."
-              </blockquote>
-              
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 mt-8">Conclusion</h2>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                {post.content}
               </p>
             </div>
 
@@ -149,8 +164,8 @@ export function BlogPost({ post, onNavigate }: BlogPostProps) {
                     📤 Share
                   </Button>
                 </div>
-                <Button 
-                  onClick={() => onNavigate('blog')}
+                <Button
+                  onClick={() => navigate("/blog")}
                   className="bg-green-600 hover:bg-green-700"
                 >
                   ← Back to Blog
@@ -165,13 +180,15 @@ export function BlogPost({ post, onNavigate }: BlogPostProps) {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-800 mb-8">Related Articles</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-8">
+              Related Articles
+            </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {relatedPosts.map((relatedPost) => (
-                <Card 
+                <Card
                   key={relatedPost.id}
                   className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-                  onClick={() => handleRelatedPostClick(relatedPost)}
+                  onClick={() => navigate(`/blog/${relatedPost.slug}`)}
                 >
                   <div className="flex">
                     <ImageWithFallback
@@ -186,7 +203,9 @@ export function BlogPost({ post, onNavigate }: BlogPostProps) {
                       <h3 className="font-bold text-sm mb-2 text-gray-800">
                         {relatedPost.title}
                       </h3>
-                      <p className="text-xs text-gray-500">{relatedPost.readTime}</p>
+                      <p className="text-xs text-gray-500">
+                        {relatedPost.readTime}
+                      </p>
                     </CardContent>
                   </div>
                 </Card>
@@ -196,67 +215,7 @@ export function BlogPost({ post, onNavigate }: BlogPostProps) {
         </div>
       </section>
 
-      {/* Comments Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-800 mb-8">Comments (23)</h2>
-            
-            {/* Comment Form */}
-            <Card className="mb-8">
-              <CardContent className="p-6">
-                <h3 className="font-bold mb-4">Leave a Comment</h3>
-                <textarea
-                  placeholder="Share your thoughts..."
-                  className="w-full p-4 border border-gray-200 rounded-lg mb-4 h-24 resize-none"
-                ></textarea>
-                <Button className="bg-green-600 hover:bg-green-700">
-                  Post Comment
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Sample Comments */}
-            <div className="space-y-6">
-              <div className="border-b border-gray-200 pb-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                    <span className="text-green-600 font-bold">S</span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <span className="font-bold text-gray-800">Sarah Johnson</span>
-                      <span className="text-gray-500 text-sm">2 days ago</span>
-                    </div>
-                    <p className="text-gray-700">
-                      Great article! I've been following this routine for a month now and I can already see the difference in my skin. Thank you for sharing these tips!
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="border-b border-gray-200 pb-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span className="text-blue-600 font-bold">M</span>
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <span className="font-bold text-gray-800">Maya Patel</span>
-                      <span className="text-gray-500 text-sm">5 days ago</span>
-                    </div>
-                    <p className="text-gray-700">
-                      Would love to see more content about natural ingredients. Do you have any recommendations for sensitive skin?
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Footer onNavigate={onNavigate} />
+      <Footer />
     </div>
   );
 }

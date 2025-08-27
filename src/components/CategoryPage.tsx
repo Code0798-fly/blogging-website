@@ -4,12 +4,19 @@ import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { Link } from 'react-router-dom';
 
-interface CategoryPageProps {
-  category: string;
-  onNavigate: (page: string) => void;
-  onSelectPost: (post: any) => void;
-}
+// interface CategoryPageProps {
+//   category: string;
+//   onNavigate: (page: string) => void;
+//   onSelectPost: (post: any) => void;
+// }
+type CategoryPageProps = {
+  onNavigate: (path: string) => void;
+  onSelectPost: (id: string) => void;
+};
 
 const categoryData = {
   skincare: {
@@ -159,9 +166,16 @@ const categoryData = {
   }
 };
 
-export function CategoryPage({ category, onNavigate, onSelectPost }: CategoryPageProps) {
-  const data = categoryData[category as keyof typeof categoryData];
-  
+export function CategoryPage({  onNavigate, onSelectPost }: CategoryPageProps) {
+ const { category } = useParams();
+  const data = category
+    ? categoryData[category as keyof typeof categoryData]
+    : null;
+
+  useEffect(() => {
+    console.log("Category param:", category);
+  }, [category]);
+
   if (!data) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-purple-50">
@@ -237,13 +251,7 @@ export function CategoryPage({ category, onNavigate, onSelectPost }: CategoryPag
               Home
             </button>
             <span>/</span>
-            <button 
-              onClick={() => onNavigate('blog')}
-              className="hover:text-primary transition-colors"
-            >
-              Blog
-            </button>
-            <span>/</span>
+           
             <span className="text-foreground font-medium">{data.title}</span>
           </nav>
         </div>
@@ -282,6 +290,11 @@ export function CategoryPage({ category, onNavigate, onSelectPost }: CategoryPag
             
             <div className="grid lg:grid-cols-2 gap-8">
               {data.posts.map((post, index) => (
+               <Link 
+    key={post.id} 
+    to={`/post/${post.title.replaceAll(' ','-').toLocaleLowerCase()}`}   
+    className="block group" 
+  >
                 <Card 
                   key={post.id}
                   className="group overflow-hidden hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:scale-[1.02] border-0 bg-white/80 backdrop-blur-sm"
@@ -329,6 +342,7 @@ export function CategoryPage({ category, onNavigate, onSelectPost }: CategoryPag
                     </div>
                   </div>
                 </Card>
+                </Link>
               ))}
             </div>
           </div>

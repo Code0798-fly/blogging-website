@@ -1,8 +1,6 @@
-interface FooterProps {
-  onNavigate: (page: string) => void;
-}
+import { Link } from "react-router-dom";
 
-export function Footer({ onNavigate }: FooterProps) {
+export function Footer() {
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 text-white relative overflow-hidden">
       {/* Background decoration */}
@@ -29,19 +27,24 @@ export function Footer({ onNavigate }: FooterProps) {
               <p className="text-white/80 mb-6 leading-relaxed max-w-md">
                 Empowering you to glow from within with expert beauty tips, wellness advice, and lifestyle inspiration. Join our community of radiant souls.
               </p>
+              {/* Social Links */}
               <div className="flex space-x-4">
-                <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-all duration-300 cursor-pointer group">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" 
+                  className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-all duration-300 cursor-pointer group">
                   <span className="text-sm group-hover:scale-110 transition-transform">📘</span>
-                </div>
-                <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-all duration-300 cursor-pointer group">
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" 
+                  className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-all duration-300 cursor-pointer group">
                   <span className="text-sm group-hover:scale-110 transition-transform">📷</span>
-                </div>
-                <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-all duration-300 cursor-pointer group">
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" 
+                  className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-all duration-300 cursor-pointer group">
                   <span className="text-sm group-hover:scale-110 transition-transform">🐦</span>
-                </div>
-                <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-all duration-300 cursor-pointer group">
+                </a>
+                <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" 
+                  className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-gradient-to-r hover:from-pink-500 hover:to-purple-500 transition-all duration-300 cursor-pointer group">
                   <span className="text-sm group-hover:scale-110 transition-transform">📌</span>
-                </div>
+                </a>
               </div>
             </div>
 
@@ -50,40 +53,40 @@ export function Footer({ onNavigate }: FooterProps) {
               <h4 className="font-bold mb-6 text-lg">Quick Links</h4>
               <ul className="space-y-3">
                 <li>
-                  <button 
-                    onClick={() => onNavigate('home')}
-                    className="text-white/70 hover:text-white hover:text-primary transition-colors duration-200 flex items-center space-x-2 group"
+                  <Link 
+                    to="/"
+                    className="text-white/70 hover:text-white transition-colors duration-200 flex items-center space-x-2 group"
                   >
                     <span className="group-hover:translate-x-1 transition-transform">🏠</span>
                     <span>Home</span>
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => onNavigate('blog')}
-                    className="text-white/70 hover:text-white hover:text-primary transition-colors duration-200 flex items-center space-x-2 group"
+                  <Link 
+                    to="/blog"
+                    className="text-white/70 hover:text-white transition-colors duration-200 flex items-center space-x-2 group"
                   >
                     <span className="group-hover:translate-x-1 transition-transform">📝</span>
                     <span>All Posts</span>
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => onNavigate('about')}
-                    className="text-white/70 hover:text-white hover:text-primary transition-colors duration-200 flex items-center space-x-2 group"
+                  <Link 
+                    to="/about"
+                    className="text-white/70 hover:text-white transition-colors duration-200 flex items-center space-x-2 group"
                   >
                     <span className="group-hover:translate-x-1 transition-transform">👥</span>
                     <span>About Us</span>
-                  </button>
+                  </Link>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => onNavigate('contact')}
-                    className="text-white/70 hover:text-white hover:text-primary transition-colors duration-200 flex items-center space-x-2 group"
+                  <Link 
+                    to="/contact"
+                    className="text-white/70 hover:text-white transition-colors duration-200 flex items-center space-x-2 group"
                   >
                     <span className="group-hover:translate-x-1 transition-transform">📞</span>
                     <span>Contact</span>
-                  </button>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -93,34 +96,34 @@ export function Footer({ onNavigate }: FooterProps) {
               <h4 className="font-bold mb-6 text-lg">Categories</h4>
               <ul className="space-y-3">
                 <li>
-                  <span className="text-white/70 hover:text-white hover:text-primary transition-colors duration-200 cursor-pointer flex items-center space-x-2 group">
+                  <Link to="/category/skincare" className="text-white/70 hover:text-white transition-colors duration-200 flex items-center space-x-2 group">
                     <span className="group-hover:translate-x-1 transition-transform">✨</span>
                     <span>Skincare & Beauty</span>
-                  </span>
+                  </Link>
                 </li>
                 <li>
-                  <span className="text-white/70 hover:text-white hover:text-primary transition-colors duration-200 cursor-pointer flex items-center space-x-2 group">
+                  <Link to="/category/wellness" className="text-white/70 hover:text-white transition-colors duration-200 flex items-center space-x-2 group">
                     <span className="group-hover:translate-x-1 transition-transform">🧘‍♀️</span>
                     <span>Wellness & Fitness</span>
-                  </span>
+                  </Link>
                 </li>
                 <li>
-                  <span className="text-white/70 hover:text-white hover:text-primary transition-colors duration-200 cursor-pointer flex items-center space-x-2 group">
+                  <Link to="/category/lifestyle" className="text-white/70 hover:text-white transition-colors duration-200 flex items-center space-x-2 group">
                     <span className="group-hover:translate-x-1 transition-transform">👗</span>
                     <span>Lifestyle & Fashion</span>
-                  </span>
+                  </Link>
                 </li>
                 <li>
-                  <span className="text-white/70 hover:text-white hover:text-primary transition-colors duration-200 cursor-pointer flex items-center space-x-2 group">
+                  <Link to="/category/nutrition" className="text-white/70 hover:text-white transition-colors duration-200 flex items-center space-x-2 group">
                     <span className="group-hover:translate-x-1 transition-transform">🥗</span>
                     <span>Nutrition & Health</span>
-                  </span>
+                  </Link>
                 </li>
                 <li>
-                  <span className="text-white/70 hover:text-white hover:text-primary transition-colors duration-200 cursor-pointer flex items-center space-x-2 group">
+                  <Link to="/category/self-care" className="text-white/70 hover:text-white transition-colors duration-200 flex items-center space-x-2 group">
                     <span className="group-hover:translate-x-1 transition-transform">🌸</span>
                     <span>Self-Care</span>
-                  </span>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -156,9 +159,9 @@ export function Footer({ onNavigate }: FooterProps) {
               © 2024 GlowVibe. All rights reserved. Made with 💖 for beautiful souls.
             </div>
             <div className="flex items-center space-x-6 text-sm">
-              <span className="text-white/60 hover:text-white transition-colors cursor-pointer">Privacy Policy</span>
-              <span className="text-white/60 hover:text-white transition-colors cursor-pointer">Terms of Service</span>
-              <span className="text-white/60 hover:text-white transition-colors cursor-pointer">Cookie Policy</span>
+              <Link to="/privacy-policy" className="text-white/60 hover:text-white transition-colors">Privacy Policy</Link>
+              <Link to="/terms-of-service" className="text-white/60 hover:text-white transition-colors">Terms of Service</Link>
+              <Link to="/cookie-policy" className="text-white/60 hover:text-white transition-colors">Cookie Policy</Link>
             </div>
           </div>
         </div>
