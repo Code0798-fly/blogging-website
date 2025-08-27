@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 import { Home } from './components/Home';
 import { BlogListing } from './components/BlogListing';
 import { BlogPost } from './components/BlogPost';
@@ -7,32 +7,25 @@ import { Contact } from './components/Contact';
 import { CategoryPage } from './components/CategoryPage';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
-  const [selectedPost, setSelectedPost] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('');
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home':
-        return <Home onNavigate={setCurrentPage} onSelectPost={setSelectedPost} onSelectCategory={setSelectedCategory} />;
-      case 'blog':
-        return <BlogListing onNavigate={setCurrentPage} onSelectPost={setSelectedPost} />;
-      case 'post':
-        return <BlogPost post={selectedPost} onNavigate={setCurrentPage} />;
-      case 'about':
-        return <About onNavigate={setCurrentPage} />;
-      case 'contact':
-        return <Contact onNavigate={setCurrentPage} />;
-      case 'category':
-        return <CategoryPage category={selectedCategory} onNavigate={setCurrentPage} onSelectPost={setSelectedPost} />;
-      default:
-        return <Home onNavigate={setCurrentPage} onSelectPost={setSelectedPost} onSelectCategory={setSelectedCategory} />;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-background">
-      {renderPage()}
+    <div>
+      {/* Example Header Navigation */}
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/blogs">Blogs</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+
+      {/* Routes */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/blogs" element={<BlogListing />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
+        <Route path="/category/:name" element={<CategoryPage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
     </div>
   );
 }
