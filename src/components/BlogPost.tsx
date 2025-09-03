@@ -5,73 +5,86 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Card, CardContent } from "./ui/card";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-
+import { categoryData } from "./data/blog";
 // ✅ all categories ka dummy data (expand kar sakte ho)
-const categoryData = {
-  skincare: {
-    posts: [
-      {
-        id: 1,
-        slug: "skincare-basics",
-        title: "The Ultimate Skincare Routine for Beginners",
-        category: "skincare",
-        readTime: "7 min read",
-        excerpt: "Learn the step by step skincare routine to achieve glowing skin...",
-        content: "Full skincare routine content with detailed steps, products, and expert advice...",
-        image:
-          "https://images.unsplash.com/photo-1583241801167-f7e4173b9c3b?w=800&h=500&fit=crop",
-      },
-      {
-        id: 4,
-        slug: "anti-aging-serums",
-        title: "The Science Behind Anti-Aging Serums",
-        category: "skincare",
-        readTime: "8 min read",
-        excerpt: "Discover how anti-aging serums actually work on skin...",
-        content: "Deep dive into anti-aging products, ingredients, and dermatologist reviews...",
-        image:
-          "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&h=500&fit=crop",
-      },
-    ],
-  },
-  haircare: {
-    posts: [
-      {
-        id: 2,
-        slug: "haircare-tips",
-        title: "5 Proven Haircare Tips for Healthy Hair",
-        category: "haircare",
-        readTime: "5 min read",
-        excerpt: "Simple habits that can transform your hair health naturally...",
-        content: "Here are 5 detailed habits, remedies, and expert-backed tips for strong hair...",
-        image:
-          "https://images.unsplash.com/photo-1600185365926-3a2b1e7b0f5d?w=800&h=500&fit=crop",
-      },
-      {
-        id: 5,
-        slug: "natural-hair-masks",
-        title: "Natural Hair Masks for Every Hair Type",
-        category: "haircare",
-        readTime: "6 min read",
-        excerpt: "DIY masks you can make from ingredients at home...",
-        content: "Step by step guide for natural masks suitable for dry, oily, curly, and straight hair...",
-        image:
-          "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&h=500&fit=crop",
-      },
-    ],
-  },
-};
+// const categoryData = {
+//   skincare: {
+//     posts: [
+//       {
+//         id: 1,
+//         slug: "skincare-basics",
+//         title: "The Ultimate Skincare Routine for Beginners",
+//         category: "skincare",
+//         readTime: "7 min read",
+//         excerpt: "Learn the step by step skincare routine to achieve glowing skin...",
+//         content: "Full skincare routine content with detailed steps, products, and expert advice...",
+//         image:
+//           "https://images.unsplash.com/photo-1583241801167-f7e4173b9c3b?w=800&h=500&fit=crop",
+//       },
+//       {
+//         id: 4,
+//         slug: "anti-aging-serums",
+//         title: "The Science Behind Anti-Aging Serums",
+//         category: "skincare",
+//         readTime: "8 min read",
+//         excerpt: "Discover how anti-aging serums actually work on skin...",
+//         content: "Deep dive into anti-aging products, ingredients, and dermatologist reviews...",
+//         image:
+//           "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&h=500&fit=crop",
+//       },
+//     ],
+//   },
+//   haircare: {
+//     posts: [
+//       {
+//         id: 2,
+//         slug: "haircare-tips",
+//         title: "5 Proven Haircare Tips for Healthy Hair",
+//         category: "haircare",
+//         readTime: "5 min read",
+//         excerpt: "Simple habits that can transform your hair health naturally...",
+//         content: "Here are 5 detailed habits, remedies, and expert-backed tips for strong hair...",
+//         image:
+//           "https://images.unsplash.com/photo-1600185365926-3a2b1e7b0f5d?w=800&h=500&fit=crop",
+//       },
+//       {
+//         id: 5,
+//         slug: "natural-hair-masks",
+//         title: "Natural Hair Masks for Every Hair Type",
+//         category: "haircare",
+//         readTime: "6 min read",
+//         excerpt: "DIY masks you can make from ingredients at home...",
+//         content: "Step by step guide for natural masks suitable for dry, oily, curly, and straight hair...",
+//         image:
+//           "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=800&h=500&fit=crop",
+//       },
+//     ],
+//   },
+// };
 
 export function BlogPost() {
   const { slug } = useParams();
   const navigate = useNavigate();
-
-  // ✅ saari categories ke andar se post find karna
+console.log("slug>>",slug)
   let post: any = null;
-  Object.values(categoryData).forEach((cat: any) => {
-    const found = cat.posts.find((p: any) => p.slug === slug);
-    if (found) post = found;
+  let category: any = null;
+
+  console.log("Slug outside loop:", slug);
+
+for (const [key, cat] of Object.entries(categoryData)) {
+  const found = cat.posts.find((p) => {
+    console.log("In find - p.slug:", p.slug, "slug:", slug);
+    return p.slug === slug;
   });
+
+  if (found) {
+    console.log("Found post:", found);
+    post = found;
+    category = cat;
+    break;
+  }
+}
+
 
   if (!post) {
     return (
@@ -142,11 +155,11 @@ export function BlogPost() {
                 {post.excerpt}
               </p>
 
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 mt-8">
+              {/* <h2 className="text-2xl font-bold text-gray-800 mb-4 mt-8">
                 Full Article
-              </h2>
+              </h2> */}
               <p className="text-gray-700 mb-6 leading-relaxed">
-                {post.content}
+               <div dangerouslySetInnerHTML={{ __html: post.content }} />
               </p>
             </div>
 
@@ -165,7 +178,7 @@ export function BlogPost() {
                   </Button>
                 </div>
                 <Button
-                  onClick={() => navigate("/blog")}
+                  onClick={() => navigate("/blogs")}
                   className="bg-green-600 hover:bg-green-700"
                 >
                   ← Back to Blog

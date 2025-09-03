@@ -5,6 +5,8 @@ import { Button } from "./ui/button";
 import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+// At the top of Home.tsx
+import { featuredPosts, categories } from "./data/blog";
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -12,89 +14,89 @@ interface HomeProps {
   onSelectCategory: (category: string) => void;
 }
 
-const featuredPosts = [
-  {
-    id: 1,
-    title: "10-Step Korean Skincare Routine for Glass Skin",
-    excerpt: "Achieve that coveted glass skin look with this comprehensive Korean skincare routine that celebrities swear by.",
-    category: "skincare",
-    readTime: "8 min read",
-    author: "Dr. Sarah Kim",
-    date: "2 days ago",
-    featured: true,
-    trending: true
-  },
-  {
-    id: 2,
-    title: "Mindful Morning Rituals for Inner Glow",
-    excerpt: "Start your day with intention and create a morning routine that radiates beauty from within.",
-    category: "wellness",
-    readTime: "6 min read",
-    author: "Maya Wellness",
-    date: "1 week ago"
-  },
-  {
-    id: 3,
-    title: "Fall Fashion Trends That Boost Confidence",
-    excerpt: "Discover this season's must-have fashion pieces that will make you feel unstoppable.",
-    category: "lifestyle",
-    readTime: "5 min read",
-    author: "Emma Style",
-    date: "3 days ago"
-  },
-  {
-    id: 4,
-    title: "Superfoods for Radiant Skin & Hair",
-    excerpt: "Nourish your beauty from within with these nutrient-packed foods that enhance your natural glow.",
-    category: "nutrition",
-    readTime: "7 min read",
-    author: "Chef Priya",
-    date: "5 days ago"
-  }
-];
+// const featuredPosts = [
+//   {
+//     id: 1,
+//     title: "10-Step Korean Skincare Routine for Glass Skin",
+//     excerpt: "Achieve that coveted glass skin look with this comprehensive Korean skincare routine that celebrities swear by.",
+//     category: "skincare",
+//     readTime: "8 min read",
+//     author: "Dr. Sarah Kim",
+//     date: "2 days ago",
+//     featured: true,
+//     trending: true
+//   },
+//   {
+//     id: 2,
+//     title: "Mindful Morning Rituals for Inner Glow",
+//     excerpt: "Start your day with intention and create a morning routine that radiates beauty from within.",
+//     category: "wellness",
+//     readTime: "6 min read",
+//     author: "Maya Wellness",
+//     date: "1 week ago"
+//   },
+//   {
+//     id: 3,
+//     title: "Fall Fashion Trends That Boost Confidence",
+//     excerpt: "Discover this season's must-have fashion pieces that will make you feel unstoppable.",
+//     category: "lifestyle",
+//     readTime: "5 min read",
+//     author: "Emma Style",
+//     date: "3 days ago"
+//   },
+//   {
+//     id: 4,
+//     title: "Superfoods for Radiant Skin & Hair",
+//     excerpt: "Nourish your beauty from within with these nutrient-packed foods that enhance your natural glow.",
+//     category: "nutrition",
+//     readTime: "7 min read",
+//     author: "Chef Priya",
+//     date: "5 days ago"
+//   }
+// ];
 
-const categories = [
-  {
-    name: "Skincare & Beauty",
-    slug: "skincare",
-    description: "Expert tips for glowing, healthy skin",
-    icon: "✨",
-    posts: 45,
-    trending: true
-  },
-  {
-    name: "Wellness & Fitness",
-    slug: "wellness", 
-    description: "Mind-body wellness for total health",
-    icon: "🧘‍♀️",
-    posts: 32,
-    trending: false
-  },
-  {
-    name: "Lifestyle & Fashion",
-    slug: "lifestyle",
-    description: "Style inspiration and life tips",
-    icon: "👗",
-    posts: 28,
-    trending: false
-  },
-  {
-    name: "Nutrition & Health",
-    slug: "nutrition",
-    description: "Fuel your body for optimal beauty",
-    icon: "🥗",
-    posts: 38,
-    trending: false
-  },
-  {
-    name: "Self-Care & Mental Health",
-    slug: "selfcare",
-    description: "Inner peace for outer radiance",
-    icon: "🌸",
-    posts: 25,
-    trending: true
-  }
-];
+// const categories = [
+//   {
+//     name: "Skincare & Beauty",
+//     slug: "skincare",
+//     description: "Expert tips for glowing, healthy skin",
+//     icon: "✨",
+//     posts: 45,
+//     trending: true
+//   },
+//   {
+//     name: "Wellness & Fitness",
+//     slug: "wellness", 
+//     description: "Mind-body wellness for total health",
+//     icon: "🧘‍♀️",
+//     posts: 32,
+//     trending: false
+//   },
+//   {
+//     name: "Lifestyle & Fashion",
+//     slug: "lifestyle",
+//     description: "Style inspiration and life tips",
+//     icon: "👗",
+//     posts: 28,
+//     trending: false
+//   },
+//   {
+//     name: "Nutrition & Health",
+//     slug: "nutrition",
+//     description: "Fuel your body for optimal beauty",
+//     icon: "🥗",
+//     posts: 38,
+//     trending: false
+//   },
+//   {
+//     name: "Self-Care & Mental Health",
+//     slug: "selfcare",
+//     description: "Inner peace for outer radiance",
+//     icon: "🌸",
+//     posts: 25,
+//     trending: true
+//   }
+// ];
 
 export function Home({ onNavigate, onSelectPost, onSelectCategory }: HomeProps) {
   const handlePostClick = (post: any) => {

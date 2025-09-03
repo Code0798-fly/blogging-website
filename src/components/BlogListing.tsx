@@ -5,68 +5,71 @@ import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { allPosts } from "./data/blog";
+import { Link } from 'react-router-dom';
+
 
 interface BlogListingProps {
   onNavigate: (page: string) => void;
   onSelectPost: (post: any) => void;
 }
 
-const allPosts = [
-  {
-    id: 1,
-    title: "10 Essential Skincare Steps for Glowing Skin",
-    excerpt: "Discover the complete skincare routine that will transform your skin and give you that natural glow.",
-    category: "skincare",
-    readTime: "5 min read",
-    date: "December 15, 2024",
-    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=250&fit=crop"
-  },
-  {
-    id: 2,
-    title: "Hair Care Secrets for Stronger, Healthier Hair",
-    excerpt: "Learn the best practices for maintaining healthy hair from root to tip with natural ingredients.",
-    category: "haircare",
-    readTime: "7 min read",
-    date: "December 12, 2024",
-    image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=250&fit=crop"
-  },
-  {
-    id: 3,
-    title: "Boost Your Immunity Naturally",
-    excerpt: "Simple lifestyle changes and natural remedies to strengthen your immune system.",
-    category: "healthcare",
-    readTime: "6 min read",
-    date: "December 10, 2024",
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=250&fit=crop"
-  },
-  {
-    id: 4,
-    title: "The Science Behind Anti-Aging Serums",
-    excerpt: "Understanding how anti-aging ingredients work and choosing the right products for your skin type.",
-    category: "skincare",
-    readTime: "8 min read",
-    date: "December 8, 2024",
-    image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=250&fit=crop"
-  },
-  {
-    id: 5,
-    title: "Natural Hair Masks for Every Hair Type",
-    excerpt: "DIY hair mask recipes using natural ingredients that you can find in your kitchen.",
-    category: "haircare",
-    readTime: "6 min read",
-    date: "December 5, 2024",
-    image: "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=400&h=250&fit=crop"
-  },
-  {
-    id: 6,
-    title: "Mindful Eating for Better Health",
-    excerpt: "How to develop a healthy relationship with food and improve your overall well-being.",
-    category: "healthcare",
-    readTime: "10 min read",
-    date: "December 3, 2024",
-    image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=250&fit=crop"
-  }
-];
+// const allPosts = [
+//   {
+//     id: 1,
+//     title: "10 Essential Skincare Steps for Glowing Skin",
+//     excerpt: "Discover the complete skincare routine that will transform your skin and give you that natural glow.",
+//     category: "skincare",
+//     readTime: "5 min read",
+//     date: "December 15, 2024",
+//     image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=250&fit=crop"
+//   },
+//   {
+//     id: 2,
+//     title: "Hair Care Secrets for Stronger, Healthier Hair",
+//     excerpt: "Learn the best practices for maintaining healthy hair from root to tip with natural ingredients.",
+//     category: "haircare",
+//     readTime: "7 min read",
+//     date: "December 12, 2024",
+//     image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&h=250&fit=crop"
+//   },
+//   {
+//     id: 3,
+//     title: "Boost Your Immunity Naturally",
+//     excerpt: "Simple lifestyle changes and natural remedies to strengthen your immune system.",
+//     category: "healthcare",
+//     readTime: "6 min read",
+//     date: "December 10, 2024",
+//     image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=250&fit=crop"
+//   },
+//   {
+//     id: 4,
+//     title: "The Science Behind Anti-Aging Serums",
+//     excerpt: "Understanding how anti-aging ingredients work and choosing the right products for your skin type.",
+//     category: "skincare",
+//     readTime: "8 min read",
+//     date: "December 8, 2024",
+//     image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=250&fit=crop"
+//   },
+//   {
+//     id: 5,
+//     title: "Natural Hair Masks for Every Hair Type",
+//     excerpt: "DIY hair mask recipes using natural ingredients that you can find in your kitchen.",
+//     category: "haircare",
+//     readTime: "6 min read",
+//     date: "December 5, 2024",
+//     image: "https://images.unsplash.com/photo-1559599101-f09722fb4948?w=400&h=250&fit=crop"
+//   },
+//   {
+//     id: 6,
+//     title: "Mindful Eating for Better Health",
+//     excerpt: "How to develop a healthy relationship with food and improve your overall well-being.",
+//     category: "healthcare",
+//     readTime: "10 min read",
+//     date: "December 3, 2024",
+//     image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=250&fit=crop"
+//   }
+// ];
 
 export function BlogListing({ onNavigate, onSelectPost }: BlogListingProps) {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -165,6 +168,15 @@ export function BlogListing({ onNavigate, onSelectPost }: BlogListingProps) {
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredPosts.map((post) => (
+                  <Link 
+                      key={post.id} 
+                     to={`/blog/${post.title
+                        .toLowerCase()
+                        .replace(/[^a-z0-9\s-]/g, '') // remove all non-alphanumeric except space & dash
+                        .replace(/\s+/g, '-')         // replace spaces with hyphen
+                        .trim()}`}  
+                      className="block group" 
+                    >
                   <Card 
                     key={post.id}
                     className="overflow-hidden hover:shadow-lg transition-all cursor-pointer hover:-translate-y-1"
@@ -192,6 +204,7 @@ export function BlogListing({ onNavigate, onSelectPost }: BlogListingProps) {
                       </div>
                     </CardContent>
                   </Card>
+                  </Link>
                 ))}
               </div>
             )}

@@ -7,6 +7,7 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from 'react-router-dom';
+import {categoryData} from './data/blog';
 
 // interface CategoryPageProps {
 //   category: string;
@@ -18,153 +19,153 @@ type CategoryPageProps = {
   onSelectPost: (id: string) => void;
 };
 
-const categoryData = {
-  skincare: {
-    title: "Skincare & Beauty",
-    description: "Expert tips and secrets for radiant, healthy skin that glows from within",
-    icon: "✨",
-    color: "from-pink-500 via-rose-500 to-pink-600",
-    heroImage: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&h=400&fit=crop",
-    posts: [
-      {
-        id: 1,
-        title: "10-Step Korean Skincare Routine for Glass Skin",
-        excerpt: "Achieve that coveted glass skin look with this comprehensive Korean skincare routine that celebrities swear by.",
-        readTime: "8 min read",
-        date: "2 days ago",
-        author: "Dr. Sarah Kim",
-        image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=250&fit=crop",
-        trending: true
-      },
-      {
-        id: 4,
-        title: "Natural DIY Face Masks for Every Skin Type",
-        excerpt: "Discover kitchen ingredients that can transform your skin with these easy-to-make face mask recipes.",
-        readTime: "6 min read",
-        date: "1 week ago",
-        author: "Beauty Expert Maya",
-        image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=250&fit=crop",
-        trending: false
-      }
-    ]
-  },
-  wellness: {
-    title: "Wellness & Fitness",
-    description: "Mind-body wellness practices for total health and inner radiance",
-    icon: "🧘‍♀️",
-    color: "from-purple-500 via-violet-500 to-purple-600",
-    heroImage: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&h=400&fit=crop",
-    posts: [
-      {
-        id: 2,
-        title: "Mindful Morning Rituals for Inner Glow",
-        excerpt: "Start your day with intention and create a morning routine that radiates beauty from within.",
-        readTime: "6 min read",
-        date: "3 days ago",
-        author: "Maya Wellness",
-        image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=250&fit=crop",
-        trending: true
-      },
-      {
-        id: 5,
-        title: "Yoga Poses for Glowing Skin",
-        excerpt: "These specific yoga poses increase blood circulation and promote natural radiance.",
-        readTime: "10 min read",
-        date: "5 days ago",
-        author: "Yogi Priya",
-        image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=400&h=250&fit=crop",
-        trending: false
-      }
-    ]
-  },
-  lifestyle: {
-    title: "Lifestyle & Fashion",
-    description: "Style inspiration and lifestyle tips for confident, beautiful living",
-    icon: "👗",
-    color: "from-orange-500 via-amber-500 to-orange-600",
-    heroImage: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&h=400&fit=crop",
-    posts: [
-      {
-        id: 3,
-        title: "Fall Fashion Trends That Boost Confidence",
-        excerpt: "Discover this season's must-have fashion pieces that will make you feel unstoppable.",
-        readTime: "5 min read",
-        date: "4 days ago",
-        author: "Emma Style",
-        image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&h=250&fit=crop",
-        trending: true
-      },
-      {
-        id: 6,
-        title: "Building a Capsule Wardrobe for Every Season",
-        excerpt: "Create a timeless, versatile wardrobe with these essential pieces that never go out of style.",
-        readTime: "7 min read",
-        date: "1 week ago",
-        author: "Fashion Guru Riya",
-        image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=250&fit=crop",
-        trending: false
-      }
-    ]
-  },
-  nutrition: {
-    title: "Nutrition & Health",
-    description: "Fuel your body and skin with the right nutrition for optimal beauty",
-    icon: "🥗",
-    color: "from-green-500 via-emerald-500 to-green-600",
-    heroImage: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&h=400&fit=crop",
-    posts: [
-      {
-        id: 7,
-        title: "Superfoods for Radiant Skin & Hair",
-        excerpt: "Nourish your beauty from within with these nutrient-packed foods that enhance your natural glow.",
-        readTime: "7 min read",
-        date: "2 days ago",
-        author: "Chef Priya",
-        image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=250&fit=crop",
-        trending: true
-      },
-      {
-        id: 8,
-        title: "Detox Water Recipes for Clear Skin",
-        excerpt: "Hydrate and detoxify with these delicious water infusions that promote clear, glowing skin.",
-        readTime: "4 min read",
-        date: "6 days ago",
-        author: "Nutritionist Anita",
-        image: "https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=400&h=250&fit=crop",
-        trending: false
-      }
-    ]
-  },
-  selfcare: {
-    title: "Self-Care & Mental Health",
-    description: "Nurture your inner peace for outer radiance and confidence",
-    icon: "🌸",
-    color: "from-pink-400 via-rose-400 to-pink-500",
-    heroImage: "https://images.unsplash.com/photo-1591343612531-ac2d8f1266e6?w=1200&h=400&fit=crop",
-    posts: [
-      {
-        id: 9,
-        title: "Self-Care Sunday Rituals for Mental Wellness",
-        excerpt: "Create sacred time for yourself with these rejuvenating self-care practices.",
-        readTime: "8 min read",
-        date: "1 day ago",
-        author: "Therapist Lisa",
-        image: "https://images.unsplash.com/photo-1591343612531-ac2d8f1266e6?w=400&h=250&fit=crop",
-        trending: true
-      },
-      {
-        id: 10,
-        title: "Meditation Techniques for Stress Relief",
-        excerpt: "Learn simple meditation practices that reduce stress and promote inner glow.",
-        readTime: "6 min read",
-        date: "4 days ago",
-        author: "Mindfulness Coach Rohit",
-        image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=400&h=250&fit=crop",
-        trending: false
-      }
-    ]
-  }
-};
+// const categoryData = {
+//   skincare: {
+//     title: "Skincare & Beauty",
+//     description: "Expert tips and secrets for radiant, healthy skin that glows from within",
+//     icon: "✨",
+//     color: "from-pink-500 via-rose-500 to-pink-600",
+//     heroImage: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&h=400&fit=crop",
+//     posts: [
+//       {
+//         id: 1,
+//         title: "10-Step Korean Skincare Routine for Glass Skin",
+//         excerpt: "Achieve that coveted glass skin look with this comprehensive Korean skincare routine that celebrities swear by.",
+//         readTime: "8 min read",
+//         date: "2 days ago",
+//         author: "Dr. Sarah Kim",
+//         image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=250&fit=crop",
+//         trending: true
+//       },
+//       {
+//         id: 4,
+//         title: "Natural DIY Face Masks for Every Skin Type",
+//         excerpt: "Discover kitchen ingredients that can transform your skin with these easy-to-make face mask recipes.",
+//         readTime: "6 min read",
+//         date: "1 week ago",
+//         author: "Beauty Expert Maya",
+//         image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400&h=250&fit=crop",
+//         trending: false
+//       }
+//     ]
+//   },
+//   wellness: {
+//     title: "Wellness & Fitness",
+//     description: "Mind-body wellness practices for total health and inner radiance",
+//     icon: "🧘‍♀️",
+//     color: "from-purple-500 via-violet-500 to-purple-600",
+//     heroImage: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&h=400&fit=crop",
+//     posts: [
+//       {
+//         id: 2,
+//         title: "Mindful Morning Rituals for Inner Glow",
+//         excerpt: "Start your day with intention and create a morning routine that radiates beauty from within.",
+//         readTime: "6 min read",
+//         date: "3 days ago",
+//         author: "Maya Wellness",
+//         image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=250&fit=crop",
+//         trending: true
+//       },
+//       {
+//         id: 5,
+//         title: "Yoga Poses for Glowing Skin",
+//         excerpt: "These specific yoga poses increase blood circulation and promote natural radiance.",
+//         readTime: "10 min read",
+//         date: "5 days ago",
+//         author: "Yogi Priya",
+//         image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=400&h=250&fit=crop",
+//         trending: false
+//       }
+//     ]
+//   },
+//   lifestyle: {
+//     title: "Lifestyle & Fashion",
+//     description: "Style inspiration and lifestyle tips for confident, beautiful living",
+//     icon: "👗",
+//     color: "from-orange-500 via-amber-500 to-orange-600",
+//     heroImage: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&h=400&fit=crop",
+//     posts: [
+//       {
+//         id: 3,
+//         title: "Fall Fashion Trends That Boost Confidence",
+//         excerpt: "Discover this season's must-have fashion pieces that will make you feel unstoppable.",
+//         readTime: "5 min read",
+//         date: "4 days ago",
+//         author: "Emma Style",
+//         image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&h=250&fit=crop",
+//         trending: true
+//       },
+//       {
+//         id: 6,
+//         title: "Building a Capsule Wardrobe for Every Season",
+//         excerpt: "Create a timeless, versatile wardrobe with these essential pieces that never go out of style.",
+//         readTime: "7 min read",
+//         date: "1 week ago",
+//         author: "Fashion Guru Riya",
+//         image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=250&fit=crop",
+//         trending: false
+//       }
+//     ]
+//   },
+//   nutrition: {
+//     title: "Nutrition & Health",
+//     description: "Fuel your body and skin with the right nutrition for optimal beauty",
+//     icon: "🥗",
+//     color: "from-green-500 via-emerald-500 to-green-600",
+//     heroImage: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&h=400&fit=crop",
+//     posts: [
+//       {
+//         id: 7,
+//         title: "Superfoods for Radiant Skin & Hair",
+//         excerpt: "Nourish your beauty from within with these nutrient-packed foods that enhance your natural glow.",
+//         readTime: "7 min read",
+//         date: "2 days ago",
+//         author: "Chef Priya",
+//         image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=250&fit=crop",
+//         trending: true
+//       },
+//       {
+//         id: 8,
+//         title: "Detox Water Recipes for Clear Skin",
+//         excerpt: "Hydrate and detoxify with these delicious water infusions that promote clear, glowing skin.",
+//         readTime: "4 min read",
+//         date: "6 days ago",
+//         author: "Nutritionist Anita",
+//         image: "https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=400&h=250&fit=crop",
+//         trending: false
+//       }
+//     ]
+//   },
+//   selfcare: {
+//     title: "Self-Care & Mental Health",
+//     description: "Nurture your inner peace for outer radiance and confidence",
+//     icon: "🌸",
+//     color: "from-pink-400 via-rose-400 to-pink-500",
+//     heroImage: "https://images.unsplash.com/photo-1591343612531-ac2d8f1266e6?w=1200&h=400&fit=crop",
+//     posts: [
+//       {
+//         id: 9,
+//         title: "Self-Care Sunday Rituals for Mental Wellness",
+//         excerpt: "Create sacred time for yourself with these rejuvenating self-care practices.",
+//         readTime: "8 min read",
+//         date: "1 day ago",
+//         author: "Therapist Lisa",
+//         image: "https://images.unsplash.com/photo-1591343612531-ac2d8f1266e6?w=400&h=250&fit=crop",
+//         trending: true
+//       },
+//       {
+//         id: 10,
+//         title: "Meditation Techniques for Stress Relief",
+//         excerpt: "Learn simple meditation practices that reduce stress and promote inner glow.",
+//         readTime: "6 min read",
+//         date: "4 days ago",
+//         author: "Mindfulness Coach Rohit",
+//         image: "https://images.unsplash.com/photo-1593811167562-9cef47bfc4d7?w=400&h=250&fit=crop",
+//         trending: false
+//       }
+//     ]
+//   }
+// };
 
 export function CategoryPage({  onNavigate, onSelectPost }: CategoryPageProps) {
  const { category } = useParams();
@@ -292,7 +293,7 @@ export function CategoryPage({  onNavigate, onSelectPost }: CategoryPageProps) {
               {data.posts.map((post, index) => (
                <Link 
     key={post.id} 
-    to={`/post/${post.title.replaceAll(' ','-').toLocaleLowerCase()}`}   
+    to={`/blog/${post.title.replaceAll(' ','-').toLocaleLowerCase()}`}   
     className="block group" 
   >
                 <Card 
@@ -328,7 +329,7 @@ export function CategoryPage({  onNavigate, onSelectPost }: CategoryPageProps) {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                           <div className={`w-10 h-10 bg-gradient-to-r ${data.color} rounded-full flex items-center justify-center`}>
-                            <span className="text-white font-bold text-sm">{post.author[0]}</span>
+                            <span className="text-white font-bold text-sm">{post.author}</span>
                           </div>
                           <div>
                             <div className="font-medium text-foreground">{post.author}</div>
