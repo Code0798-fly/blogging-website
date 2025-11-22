@@ -164,27 +164,7 @@ for (const [key, cat] of Object.entries(categoryData)) {
             </div>
 
             {/* Article Actions */}
-            <div className="border-t border-gray-200 pt-8 mt-8">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <Button variant="outline" size="sm">
-                    💖 Like (124)
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    💬 Comment (23)
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    📤 Share
-                  </Button>
-                </div>
-                <Button
-                  onClick={() => navigate("/blogs")}
-                  className="bg-green-600 hover:bg-green-700"
-                >
-                  ← Back to Blog
-                </Button>
-              </div>
-            </div>
+           
           </div>
         </div>
       </article>
