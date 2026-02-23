@@ -6,6 +6,7 @@ import { Badge } from "./ui/badge";
 import { Card, CardContent } from "./ui/card";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { categoryData } from "./data/blog";
+import { Helmet } from 'react-helmet-async';
 // ✅ all categories ka dummy data (expand kar sakte ho)
 // const categoryData = {
 //   skincare: {
@@ -102,6 +103,22 @@ for (const [key, cat] of Object.entries(categoryData)) {
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>{postTitle} | GlowVibe Skin</title>
+        <meta name="description" content={postDesc} />
+
+        {/* Facebook / WhatsApp / LinkedIn Tags */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={postTitle} />
+        <meta property="og:description" content={postDesc} />
+        <meta property="og:image" content={postImage} />
+        <meta property="og:url" content={`https://glowvibeskin.vercel.app/blog/${slug}`} />
+
+        {/* Twitter Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={postTitle} />
+        <meta name="twitter:image" content={postImage} />
+      </Helmet>
       <Header />
 
       {/* Article Header */}
